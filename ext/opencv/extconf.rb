@@ -29,6 +29,8 @@ end
 incdir, libdir = dir_config("opencv", "/usr/local/include", "/usr/local/lib")
 incdir = incdir.split(";").last
 libdir = libdir.split(";").last
+puts "include: #{incdir}"
+puts "lib: #{libdir}"
 dir_config("libxml2", "/usr/include", "/usr/lib")
 
 opencv_headers = ["opencv2/core/core_c.h", "opencv2/core/core.hpp", "opencv2/imgproc/imgproc_c.h",
@@ -77,3 +79,5 @@ $CFLAGS << " -I#{File.dirname(__FILE__)}/ext/opencv"
 # Create Makefile
 create_makefile('opencv')
 
+MAKEFILE = 'Makefile'
+File.write(MAKEFILE, File.read(MAKEFILE).sub(%r{topdir = /([A-Z])/}, 'topdir = \1:/'))
